@@ -88,8 +88,15 @@ Plug 'tomasr/molokai'
 
 " python
 "" Python Bundle Complier
-Plug 'davidhalter/jedi-vim'
+Plug 'Valloric/YouCompleteMe'
+let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 
+"" Snippets Keymap
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 "*****************************************************************************
 "*****************************************************************************
