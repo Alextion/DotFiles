@@ -1,0 +1,21 @@
+[app] (name=fbrun)
+  [Position]	(CENTER)	{0 0}
+  [Layer]	{2}
+[end]
+[app] (name=chromium) (class=Chromium) (role=browser)
+  [Position]	(UPPERLEFT)	{0% 0%}
+[end]
+[app] (name=gvim) (class=Gvim)
+  [Workspace]	{1}
+  [Position]	(UPPERLEFT)	{0% 0%}
+[end]
+[app] (name=urxvt) (class=URxvt)
+  [Head]	{1}
+  [Workspace]	{2}
+  [Fullscreen]	{yes}
+[end]
+[app] (name=conky) (class=Conky)
+  [Head]	{1}
+  [Workspace]	{1}
+  [Position]	(UPPERLEFT)	{0% 0%}
+[end]

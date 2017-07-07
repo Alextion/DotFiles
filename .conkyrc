@@ -1,0 +1,186 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--[[
+Conky, a system monitor, based on torsmo
+
+Any original torsmo code is licensed under the BSD license
+
+All code written since the fork of torsmo is licensed under the GPL
+
+Please see COPYING for details
+
+Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+Copyright (c) 2005-2012 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+]]
+
+conky.config = {
+    alignment = 'top_right',
+    background = yes,
+    border_width = 0,
+	color0 = '#999999',
+	color1 = '#cccccc',
+	color2 = '#ff0000',
+	-- red
+	color3 = '#996633',
+	-- color3 墨绿色
+	color4 = '#0000ff',
+	-- blue
+	color6 = '#ccff00',
+	color7 = '#0099cc',
+	color8 = '#cc9900',
+	color9 = '#333333',
+	format_human_readable = enable,
+    cpu_avg_samples = 2,
+    net_avg_samples = 4,
+	diskio_avg_samples = 3,
+	default_color = 'grey',
+	--default_bar_height = 6,
+	--default_bar_width = 0,
+	--default_gauge_height = 25,
+	--default_gauge_width = 40,
+	--default_graph_height = 25,
+	--default_graph_width = ,
+    --default_outline_color = 'white',
+    --default_shade_color = 'white',
+	--disable_auto_reload = true,
+	--display = ,
+	--xinerama_head = ,
+	double_buffer = true,
+    --draw_borders = false,
+    draw_graph_borders = false,
+    --draw_outline = false,
+    --draw_shades = false,
+    --extra_newline = false,
+    font = 'NotoSansMonoCJKSC:size=10',
+    gap_x = 5,
+    gap_y = 5,
+	--http_refresh = false,
+	if_up_strictness = 'link',
+	--max_text_width = 0,
+	--max_user_text = 16384,
+	--maximum_width = ,
+    --minimum_height = 5,
+	--minimum_width = 400,
+    no_buffers = true,
+	--nvidia_display = ,
+    --out_to_console = false,
+	--out_to_http = false,
+	--out_to_ncurses = false,
+    --out_to_stderr = false,
+	--out_to_x = true,
+	override_utf8_locale = true,
+    own_window = no,
+	own_window_argb_visual = true,
+	own_window_argb_value = 0 ,
+	own_window_transparent = true,
+    --own_window_type = 'override',
+	own_window_class = 'Conky',
+	--short_units = true,
+    --show_graph_scale = false,
+    --show_graph_range = false,
+    --stippled_borders = 0,
+	--text_buffer_size = 256,
+	--top_cpu_separate = true,
+	--top_name_verbose = true,
+	--top_name_width =15,
+	--total_run_times = 0,
+    update_interval = 1,
+	update_interval_on_battery = 1,
+    use_spacer = 'none',
+    use_xft = true
+}
+
+conky.text = [[
+${font size=20}${color9}${time %F %A} ${time %H:%S}${alignr} \
+Uptime:$uptime
+$hr
+${color7}${font}CPU:${offset 20}$cpu%${offset 20}${freq}mHz\
+${offset 20}${font}${color2}${acpitemp}℃ \
+${alignr}${color7}RAM:$memperc% = $mem / $memmax
+${color}${cpugraph 50,200 00ff00 ff0000} \
+${color}${memgraph 50,200 00ff00 ff0000}
+${color7}CPU 1 : ${cpu cpu1}%${offset 30}$color${cpubar cpu1 12,100}  \
+${color7}CPU 2 : ${alignr 5}${cpu cpu2}% $color${cpubar cpu2 12,100}
+${color7}Swap Usage: $swapperc% = $swap/$swapmax \
+$color${alignr 5}${swapbar 12,100}
+${color3}Networking: $hr
+${if_up enp8s8}\
+ ${color #009999}ETH0\
+ ${color #00cc88}${addrs enp8s8}
+ ${color3}total:${totaldown enp8s8} \
+ ${goto 180}${color3}${downspeed enp8s8}\
+ ${goto 245}↓${color2}↑ ${upspeed enp8s8}\
+ ${goto 350}${color2}total:${totalup enp8s8}
+${color3}${downspeedgraph enp8s8 32.200 00ffff 00ff00} \
+${color3}${downspeedgraph enp8s8 32.200 00ffff 00ff00}
+${endif}\
+${if_up wlp5s0}\
+	${color #009999} WIFI \
+	${alignr}${color0}ESSID: ${color8}${wireless_essid wlp5s0}
+ 	${color #00cc88}IP: ${addr wlp5s0}\
+ 	${color #6699ff}${alignr}AP MAC: ${color #9966ff}${wireless_ap wlp5s0}
+	${color0} Channel: ${color7}${wireless_channel wlp5s0}\
+	${color0} Freq: ${color7}${wireless_freq wlp5s0}\
+	${color0} Link quality: ${wireless_link_bar 10,80 wlp5s0}
+	${color3} Total:${totaldown wlp5s0}↓\
+ 	${alignc}${downspeed wlp5s0}↓\
+ 	${color2}${upspeed wlp5s0}↑\
+ 	${alignr}Total:${totalup wlp5s0}↑
+${color3}${downspeedgraph wlp5s0 32,200 00ffff 00ff00} \
+${color3}${upspeedgraph wlp5s0 32,200 00ffff 00ff00}
+${endif}\
+DiskIO: $diskio \
+$hr
+ ${color0}/dev/sda${offset 20} \
+${color2}R:${offset 20}${diskio_read sda}\
+ ${offset 20}${color3}W:\
+ ${offset 20}${diskio_write sda}
+${color}${diskiograph_read 30,200 00ff00 ffff00} \
+${color}${diskiograph_write 30,200 00ff00 ffff00}
+\
+${color3}File systems: \
+$hr
+${color1}/     ${alignr 200}\
+ ${color0}${fs_used /} /\
+ ${color0}${fs_size /} \
+ ${color0}${fs_bar 6 /}
+${color1}/boot  ${alignr 200}\
+ ${color0}${fs_used /boot} /\
+ ${color0}${fs_size /boot} \
+ ${color0}${fs_bar 6 /boot}
+\
+Processes:$color $processes${offset 20} \
+Running:$color $running_processes 
+${color3}Highest CPU${offset 50}PID${offset 20}CPU% | \
+${color3}Highest MEM${offset 45}PID${offset 15}MEM%
+${color0} ${top     name 1}${top     pid 1}${top     cpu 1} |\
+${color0} ${top_mem name 1}${top_mem pid 1}${top_mem mem 1}
+${color0} ${top     name 2}${top     pid 2}${top     cpu 2} |\
+${color0} ${top_mem name 2}${top_mem pid 2}${top_mem mem 2}
+${color0} ${top     name 3}${top     pid 3}${top     cpu 3} |\
+${color0} ${top_mem name 3}${top_mem pid 3}${top_mem mem 3}
+${color0} ${top     name 4}${top     pid 4}${top     cpu 4} |\
+${color0} ${top_mem name 4}${top_mem pid 4}${top_mem mem 4}
+${color0} ${top     name 5}${top     pid 5}${top     cpu 5} |\
+${color0} ${top_mem name 5}${top_mem pid 5}${top_mem mem 5}
+${color0} ${top     name 6}${top     pid 6}${top     cpu 6} |\
+${color0} ${top_mem name 6}${top_mem pid 6}${top_mem mem 6}
+${color0} ${top     name 7}${top     pid 7}${top     cpu 7} |\
+${color0} ${top_mem name 7}${top_mem pid 7}${top_mem mem 7}
+${color0} ${top     name 8}${top     pid 8}${top     cpu 8} |\
+${color0} ${top_mem name 8}${top_mem pid 8}${top_mem mem 8}
+${color0} ${top     name 9}${top     pid 9}${top     cpu 9} |\
+${color0} ${top_mem name 9}${top_mem pid 9}${top_mem mem 9}
+]]
